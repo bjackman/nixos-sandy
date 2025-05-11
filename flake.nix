@@ -22,6 +22,7 @@
             # assume that this will always be built on a proper american computer
             nixpkgs.buildPlatform = "x86_64-linux";
             nixpkgs.hostPlatform = "aarch64-linux";
+
             networking.hostName = "sandy";
 
             virtualisation.vmVariant.virtualisation = {
@@ -37,6 +38,7 @@
           })
         ];
       };
+
       devShells.x86_64-linux.default = pkgs.mkShell {
         packages = with pkgs; [ nixfmt-classic nixos-rebuild ];
       };
