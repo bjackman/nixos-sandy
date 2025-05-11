@@ -35,6 +35,8 @@
               # Point to the x86 packages for running QEMU etc.
               host.pkgs = pkgs;
             };
+
+            system.stateVersion = "25.05";
           })
         ];
       };
