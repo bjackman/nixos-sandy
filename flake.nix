@@ -14,14 +14,26 @@
         modules = [
           inputs.my-nixos.nixosModules.brendan
           ({ modulesPath, ... }: {
-            imports =
-              [ "${modulesPath}/installer/sd-card/sd-image-aarch64.nix" ];
+            imports = [
+              "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
+            ];
 
             # Hmm, seems like cross-compilation is a bit of a mess, so here we just
             # assume that this will always be built on a proper american computer
             nixpkgs.buildPlatform = "x86_64-linux";
             nixpkgs.hostPlatform = "aarch64-linux";
             networking.hostName = "sandy";
+
+            virtualisation.vmVariant.virtualisation = {
+              forwardPorts = [{
+                from = "host";
+                host.port = 2222;
+                guest.port = 22;
+              }];
+              graphics = false;
+              # Point to the x86 packages for running QEMU etc.
+              host.pkgs = pkgs;
+            };
           })
         ];
       };
