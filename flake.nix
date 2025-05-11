@@ -35,6 +35,16 @@
               # Point to the x86 packages for running QEMU etc.
               host.pkgs = pkgs;
             };
+
+            # Note this requires running `sudo tailscale up` on the target to set up.
+            # To avoid this we'd need to put the auth key into the disk image.
+            # Most of the ways that I could see for doing that woudl also leak
+            # it into the Nix store which is not a great idea.
+            # I think the most practical way is to just build the disk image and
+            # then splat the key into it as a post-processing step (e.g.
+            # libguestfs/virt-customize) and then point to the key via
+            # services.tailscale.authKeyFile. But, whatever.
+            services.tailscale.enable = true;
           })
         ];
       };
