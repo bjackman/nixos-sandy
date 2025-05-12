@@ -8,9 +8,9 @@
   };
 
   outputs = inputs@{ nixpkgs, ... }:
-    let pkgs = import nixpkgs { system = "x86_64-linux"; };
-    in {
-      nixosConfigurations.sandy = nixpkgs.lib.nixosSystem {
+    let
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      mkSandyConfig = hostName: nixpkgs.lib.nixosSystem {
         modules = [
           inputs.my-nixos.nixosModules.brendan
           ({ modulesPath, ... }: {
@@ -23,7 +23,7 @@
             nixpkgs.buildPlatform = "x86_64-linux";
             nixpkgs.hostPlatform = "aarch64-linux";
 
-            networking.hostName = "sandy";
+            networking.hostName = hostName;
 
             virtualisation.vmVariant.virtualisation = {
               forwardPorts = [{
@@ -50,6 +50,9 @@
           })
         ];
       };
+    in {
+      nixosConfigurations.sandy = mkSandyConfig "sandy";
+      nixosConfigurations.sandy-staging = mkSandyConfig "sandy-staging";
 
       devShells.x86_64-linux.default = pkgs.mkShell {
         packages = with pkgs; [ nixfmt-classic nixos-rebuild ];
