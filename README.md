@@ -10,7 +10,7 @@ from the host). This latter explanation seems plausible. Anyway, I realised I
 can just use "staging" hardware instead.
 
 Build an SD card image: `nix build
-.#nixosConfigurations.sandy.config.system.build.sdImage`. Or use `sandy-staging`
+.#sdImage`. Or use `.#sdImageStaging`
 instead for a test version (just has a different hostname to avoid confusion).
 
 This also requires compiling the whole world, not sure why that is. It might be

@@ -7,7 +7,7 @@
     my-nixos.url = "github:bjackman/nixos-flake?ref=master";
   };
 
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
       mkSandyConfig = hostName: nixpkgs.lib.nixosSystem {
@@ -55,7 +55,7 @@
       nixosConfigurations.sandy-staging = mkSandyConfig "sandy-staging";
 
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = with pkgs; [ nixfmt-classic nixos-rebuild ];
+        packages = with pkgs; [ nixfmt-classic nixos-rebuild libguestfs-with-appliance ];
       };
     };
 }
