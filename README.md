@@ -13,6 +13,17 @@ Build an SD card image: `nix build
 .#sdImage`. Or use `.#sdImageStaging`
 instead for a test version (just has a different hostname to avoid confusion).
 
+To flash an image that will bring up Tailscale automatically on first boot:
+
+- Build an image as above
+- Generate an Auth Key and write it to a file
+- Run `nix run .#addTailscaleAuthKey -- $SD_IMAGE_PATH out.img $AUTH_KEY_FILE`
+  (where `SD_IMAGE_PATH` is the .img.zst file you built, in the Nix store).
+- Flash `out.img` to the SD card.
+
+This dance is because I was too silly to learn a proper way to manage secrets,
+maybe `agenix` or `sops-nix` could make this issue go away.
+
 This also requires compiling the whole world, not sure why that is. It might be
 that cross-compilation changes the build hashes so I can't use the ones from the
 public caches? But, I dunno.
