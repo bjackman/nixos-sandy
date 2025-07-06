@@ -47,6 +47,16 @@
                 services.tailscale = {
                   enable = true;
                   authKeyFile = tailscaleAuthKeyFile;
+                  # Exit node
+                  extraSetFlags = [ "--advertise-exit-node" ];
+                  useRoutingFeatures = "server";
+                };
+
+                # Required for the tailscale exit node to work (per Tailscale
+                # docs).
+                boot.kernel.sysctl = {
+                  "net.ipv4.ip_forward" = 1;
+                  "net.ipv6.conf.all.forwarding" = 1;
                 };
               }
             )
