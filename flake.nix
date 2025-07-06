@@ -105,11 +105,7 @@
       };
 
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = with pkgs; [
-          nixfmt-classic
-          nixos-rebuild
-          libguestfs-with-appliance
-        ];
+        packages = with pkgs; [ nixos-rebuild ];
       };
     };
 }
