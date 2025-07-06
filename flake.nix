@@ -2,7 +2,7 @@
   description = "Provides NixOS configuration for the Raspberry Pi at my mum's place";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     my-nixos.url = "github:bjackman/nixos-flake?ref=master";
   };
 
