@@ -50,12 +50,12 @@
       };
     in {
       nixosConfigurations.sandy = mkSandyConfig "sandy";
-      nixosConfigurations.sandy-staging = mkSandyConfig "sandy-staging";
+      nixosConfigurations.norte = mkSandyConfig "norte";
 
       # Just for convenience.
       packages.x86_64-linux = {
-        sdImage = self.nixosConfigurations.sandy.config.system.build.sdImage;
-        sdImageStaging = self.nixosConfigurations.sandy-staging.config.system.build.sdImage;
+        sdImageSandy = self.nixosConfigurations.sandy.config.system.build.sdImage;
+        sdImageNorte = self.nixosConfigurations.norte.config.system.build.sdImage;
 
         # In order to bring up the device and have it connect immediately to
         # Tailscale, we want to put an Auth Key into the image. But, we don't
