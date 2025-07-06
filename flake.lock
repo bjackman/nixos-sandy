@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "falba": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1750667008,
+        "narHash": "sha256-yWPDDwFJ/PMaKRO2W598exoSbwhsL4F9r8MQBQG8iyM=",
+        "owner": "bjackman",
+        "repo": "falba",
+        "rev": "1c35d88579201064c726849e5f31f812c1e467b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bjackman",
+        "repo": "falba",
+        "type": "github"
+      }
+    },
     "kernel-6_14": {
       "flake": false,
       "locked": {
@@ -17,35 +33,54 @@
         "type": "github"
       }
     },
-    "kernel-asi-rfcv2": {
+    "kernel-asi-page-cache-fix": {
       "flake": false,
       "locked": {
-        "lastModified": 1744980894,
-        "narHash": "sha256-4qbWmABq/GC7t0ZNY7OHp3cFHn/GkRRVLoYzzXknxqU=",
+        "lastModified": 1750842928,
+        "narHash": "sha256-iDnTlrMc501KBG4qgc4qzzDs1Z935G2ScPr6uL+Qfec=",
         "owner": "bjackman",
         "repo": "linux",
-        "rev": "0e59046a481b4f2ac362fbe6089905b176753961",
+        "rev": "42d6153b5e4b82409402493bdd9df614d25df73a",
         "type": "github"
       },
       "original": {
         "owner": "bjackman",
-        "ref": "asi/rfcv2",
+        "ref": "asi/fix-page-cache",
         "repo": "linux",
+        "type": "github"
+      }
+    },
+    "kernel-asi-rfcv2-preview": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736531188,
+        "narHash": "sha256-PM7wVgU2q0s+VKL6dlSvqf512MZ5XiButbKwYHZYe5g=",
+        "owner": "googleprodkernel",
+        "repo": "linux-kvm",
+        "rev": "3c5a494074062dab363b4b0aa3b3b792326b1ec3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "googleprodkernel",
+        "ref": "asi-rfcv2-preview",
+        "repo": "linux-kvm",
         "type": "github"
       }
     },
     "my-nixos": {
       "inputs": {
+        "falba": "falba",
         "kernel-6_14": "kernel-6_14",
-        "kernel-asi-rfcv2": "kernel-asi-rfcv2",
+        "kernel-asi-page-cache-fix": "kernel-asi-page-cache-fix",
+        "kernel-asi-rfcv2-preview": "kernel-asi-rfcv2-preview",
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1746992756,
-        "narHash": "sha256-JoRmahhPVBSenGt4UihvJNL8O6MBGOWHrHZ9w1qW9lI=",
+        "lastModified": 1751285391,
+        "narHash": "sha256-iDDoa1k5M8iFILTQ+K0O5XX6nr9apddjSgNEZHfPWTo=",
         "owner": "bjackman",
         "repo": "nixos-flake",
-        "rev": "17794670d04838a7aac443c7b335faaf0b9f418a",
+        "rev": "86d210ee8fdb0ff9e55d5b05ea7a765ffef0f7f5",
         "type": "github"
       },
       "original": {
@@ -57,32 +92,32 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1744463964,
-        "narHash": "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=",
+        "lastModified": 1748162331,
+        "narHash": "sha256-rqc2RKYTxP3tbjA+PB3VMRQNnjesrT0pEofXQTrMsS8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2631b0b7abcea6e640ce31cd78ea58910d31e650",
+        "rev": "7c43f080a7f28b2774f3b3f43234ca11661bf334",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1744463964,
-        "narHash": "sha256-LWqduOgLHCFxiTNYi3Uj5Lgz0SR+Xhw3kr/3Xd0GPTM=",
+        "lastModified": 1751741127,
+        "narHash": "sha256-t75Shs76NgxjZSgvvZZ9qOmz5zuBE8buUaYD28BMTxg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2631b0b7abcea6e640ce31cd78ea58910d31e650",
+        "rev": "29e290002bfff26af1db6f64d070698019460302",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
+        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
