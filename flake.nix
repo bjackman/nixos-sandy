@@ -14,6 +14,7 @@
       mkSandyConfig =
         hostName:
         nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
           modules = [
             inputs.my-nixos.nixosModules.brendan
             (
@@ -22,11 +23,6 @@
                 imports = [
                   "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
                 ];
-
-                # Hmm, seems like cross-compilation is a bit of a mess, so here we just
-                # assume that this will always be built on a proper american computer
-                nixpkgs.buildPlatform = "x86_64-linux";
-                nixpkgs.hostPlatform = "aarch64-linux";
 
                 networking.hostName = hostName;
 
@@ -39,8 +35,6 @@
                     }
                   ];
                   graphics = false;
-                  # Point to the x86 packages for running QEMU etc.
-                  host.pkgs = pkgs;
                 };
 
                 system.stateVersion = "25.05";
