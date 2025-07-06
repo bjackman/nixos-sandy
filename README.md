@@ -27,3 +27,9 @@ maybe `agenix` or `sops-nix` could make this issue go away.
 This also requires compiling the whole world, not sure why that is. It might be
 that cross-compilation changes the build hashes so I can't use the ones from the
 public caches? But, I dunno.
+
+## TODO:
+
+- [ ] Adopt
+  [this](https://github.com/femtodata/nix-utils/blob/d18e28bd23f7b6686565ea96a8786fccde12ec13/modules/switch-fix.nix)
+  once I can turn my brain on enought to understand it.
