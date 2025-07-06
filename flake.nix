@@ -3,7 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
-    my-nixos.url = "github:bjackman/nixos-flake?ref=master";
+    my-nixos= {
+      url = "github:bjackman/nixos-flake?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
