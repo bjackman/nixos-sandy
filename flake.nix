@@ -39,7 +39,8 @@
 
             system.stateVersion = "25.05";
 
-            # Note this requires running `sudo tailscale up` on the target to set up.
+            # Note this requires running `sudo tailscale up` on the target to
+            # set up, unless you use the addTailscaleAuthKey mechanism.
             services.tailscale = {
               enable = true;
               authKeyFile = tailscaleAuthKeyFile;
