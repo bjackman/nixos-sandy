@@ -7,12 +7,34 @@
       url = "github:bjackman/nixos-flake?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ self, nixpkgs, ... }:
+    inputs@{ self, nixpkgs, deploy-rs, ... }:
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
+      # This is a rather bananas dance to create a cross-compiled deploy-rs.
+      # There is a binary in there that needs to be build for the target
+      # architecture, so this sets up a version of nixpkgs that's cross-compiled
+      # to aarch64. Then deploy-rs provides an overlay that will build the
+      # pacakge via this cross compilation. This does still require building
+      # rustc though lmao.
+      # Note this ISN'T used for the actual NixOS system, for that it's just
+      # built "natively" so you'll need the binfmt_misc magic to make it work.
+      # That is fine in practice because you just get everything from the binary
+      # cache.
+      # https://nixos.wiki/wiki/Cross_Compiling has a section about "lazy
+      # cross-compiling" that seems like a more elegant way to achieve something
+      # kinda similar to this.
+      pkgsCross = import nixpkgs {
+        localSystem = "x86_64-linux";
+        crossSystem = { config = "aarch64-unknown-linux-gnu"; };
+        overlays = [ deploy-rs.overlays.default ];
+      };
       tailscaleAuthKeyFile = "/var/tmp/tailscale-auth-key"; # /var/tmp I guess...?
       mkSandyConfig =
         hostName:
@@ -109,13 +131,23 @@
         };
       };
 
+      deploy.nodes.norte = {
+        hostname = "norte";
+        profiles.system = {
+          user = "root";
+          path = pkgsCross.deploy-rs.lib.activate.nixos self.nixosConfigurations.norte;
+        };
+      };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
       apps.x86_64-linux.addTailscaleAuthKey = {
         type = "app";
         program = "${self.packages.x86_64-linux.addTailscaleAuthKey}/bin/add-tailscale-auth-key";
       };
 
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = with pkgs; [ nixos-rebuild ];
+        packages = with pkgs; [ nixos-rebuild deploy-rs.packages.x86_64-linux.default ];
       };
     };
 }
