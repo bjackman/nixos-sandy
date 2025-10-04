@@ -7,10 +7,14 @@
       url = "github:bjackman/nixos-flake?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    inputs@{ self, nixpkgs, ... }:
+    inputs@{ self, nixpkgs, deploy-rs, ... }:
     let
       pkgs = import nixpkgs { system = "x86_64-linux"; };
       tailscaleAuthKeyFile = "/var/tmp/tailscale-auth-key"; # /var/tmp I guess...?
@@ -109,13 +113,23 @@
         };
       };
 
+      deploy.nodes.norte = {
+        hostname = "norte";
+        profiles.system = {
+          user = "root";
+          path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.norte;
+        };
+      };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
       apps.x86_64-linux.addTailscaleAuthKey = {
         type = "app";
         program = "${self.packages.x86_64-linux.addTailscaleAuthKey}/bin/add-tailscale-auth-key";
       };
 
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = with pkgs; [ nixos-rebuild ];
+        packages = with pkgs; [ nixos-rebuild deploy-rs.packages.x86_64-linux.default ];
       };
     };
 }
